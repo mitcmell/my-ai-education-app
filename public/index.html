@@ -110,12 +110,25 @@
                         
                         <div class="space-y-4">
                             <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">AI Model</label>
+                                <select id="model" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                    <option value="claude-3-sonnet" selected>Claude 3 Sonnet (Balanced)</option>
+                                    <option value="claude-3-haiku">Claude 3 Haiku (Fast & Efficient)</option>
+                                    <option value="claude-3-opus">Claude 3 Opus (Most Capable)</option>
+                                    <option value="llama2-70b">Llama 2 70B (Alternative)</option>
+                                    <option value="titan-text-large">Amazon Titan Large (AWS Native)</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-1">Choose based on your needs: speed vs. capability vs. cost</p>
+                            </div>
+
+                            <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Learning Mode</label>
                                 <select id="mode" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                                     <option value="standard">Standard - Direct answers</option>
                                     <option value="socratic">Socratic - Guided questions</option>
                                     <option value="step-by-step">Step-by-Step - Detailed breakdown</option>
                                     <option value="creative">Creative - Fun analogies</option>
+                                    <option value="research">Research - Academic analysis</option>
                                 </select>
                             </div>
                             
@@ -123,11 +136,15 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Subject Focus</label>
                                 <select id="subject" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                                     <option value="general">General</option>
-                                    <option value="math">Mathematics</option>
-                                    <option value="science">Science</option>
-                                    <option value="history">History</option>
-                                    <option value="literature">Literature</option>
-                                    <option value="coding">Programming</option>
+                                    <option value="mathematics">Mathematics</option>
+                                    <option value="science">Natural Sciences</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="computer-science">Computer Science</option>
+                                    <option value="business">Business & Economics</option>
+                                    <option value="humanities">Humanities</option>
+                                    <option value="social-sciences">Social Sciences</option>
+                                    <option value="medicine">Medicine & Health</option>
+                                    <option value="law">Law</option>
                                 </select>
                             </div>
                             
@@ -138,6 +155,47 @@
                                     <option value="balanced" selected>Balanced</option>
                                     <option value="detailed">Detailed</option>
                                 </select>
+                            </div>
+
+                            <div class="border-t pt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Enhanced Features</label>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-4 h-4 bg-blue-100 rounded flex items-center justify-center">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M21 12A9 9 0 11 3 12 9 9 0 01 21 12Z" stroke="#3B82F6" stroke-width="2"/>
+                                                    <path d="M9 12L11 14L15 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                            <span class="text-sm text-gray-700">Web Search</span>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="webSearchEnabled" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                                        </label>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Enable real-time web search for current information and sources</p>
+                                </div>
+
+                                <div class="mt-3 space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-4 h-4 bg-green-100 rounded flex items-center justify-center">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9 12L11 14L15 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                            <span class="text-sm text-gray-700">Citation Mode</span>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="citationEnabled" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                                        </label>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Include proper academic citations and source references</p>
+                                </div>
                             </div>
                         </div>
                         
@@ -170,7 +228,7 @@
                             </div>
                             <div class="bg-gray-50 rounded-2xl px-4 py-3 message-fade-in">
                                 <p class="text-gray-800">Hello! I'm your AI education assistant. I can help you learn and understand various topics. Feel free to ask me anything, and I'll adapt my teaching style based on your preferences.</p>
-                                <p class="text-gray-600 text-sm mt-2">💡 Try different learning modes in the settings to see how my responses change!</p>
+                                <p class="text-gray-600 text-sm mt-2">💡 Try different learning modes and models in the settings to see how my responses change!</p>
                             </div>
                         </div>
                     </div>
@@ -269,7 +327,7 @@
                             </div>
                             <div class="bg-gray-50 rounded-2xl px-4 py-3 message-fade-in">
                                 <p class="text-gray-800">Hello! I'm your AI education assistant. I can help you learn and understand various topics. Feel free to ask me anything, and I'll adapt my teaching style based on your preferences.</p>
-                                <p class="text-gray-600 text-sm mt-2">💡 Try different learning modes in the settings to see how my responses change!</p>
+                                <p class="text-gray-600 text-sm mt-2">💡 Try different learning modes and models in the settings to see how my responses change!</p>
                             </div>
                         </div>
                     </div>
@@ -309,10 +367,13 @@
 
             isLoading = true;
             
-            // Get settings
+            // Get all settings
+            const model = document.getElementById('model').value;
             const mode = document.getElementById('mode').value;
             const subject = document.getElementById('subject').value;
             const responseLength = document.getElementById('responseLength').value;
+            const webSearchEnabled = document.getElementById('webSearchEnabled').checked;
+            const citationEnabled = document.getElementById('citationEnabled').checked;
 
             // Add user message
             const userMessageDiv = document.createElement('div');
@@ -347,10 +408,15 @@
                             </svg>
                         </div>
                         <div class="bg-gray-50 rounded-2xl px-4 py-3">
-                            <div class="typing-dots">
-                                <span></span>
-                                <span></span>
-                                <span></span>
+                            <div class="flex items-center space-x-2">
+                                <div class="typing-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-2">
+                                    ${webSearchEnabled ? 'Searching web and thinking...' : 'Thinking...'}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -362,16 +428,27 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
             try {
-                console.log('Sending request:', { message, mode, subject, responseLength });
+                console.log('Sending request:', { 
+                    message, 
+                    model, 
+                    mode, 
+                    subject, 
+                    responseLength, 
+                    webSearchEnabled, 
+                    citationEnabled 
+                });
                 
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         message: message,
+                        model: model,
                         mode: mode,
                         subject: subject,
-                        responseLength: responseLength
+                        responseLength: responseLength,
+                        webSearchEnabled: webSearchEnabled,
+                        citationEnabled: citationEnabled
                     })
                 });
 
@@ -403,6 +480,22 @@
                     aiResponse = 'I received a response but in an unexpected format. Please check the console for details.';
                 }
                 
+                // Add model info and search indicator
+                let responseHeader = '';
+                if (data.modelUsed || data.searchResults) {
+                    responseHeader = '<div class="text-xs text-gray-500 mb-2 flex items-center space-x-2">';
+                    if (data.modelUsed) {
+                        responseHeader += `<span>📊 ${data.modelUsed}</span>`;
+                    }
+                    if (data.searchResults) {
+                        responseHeader += `<span>🔍 ${data.searchResults} web results</span>`;
+                    }
+                    if (data.sources && data.sources.length > 0) {
+                        responseHeader += `<span>📚 ${data.sources.length} sources</span>`;
+                    }
+                    responseHeader += '</div>';
+                }
+                
                 // Add AI response
                 const aiMessageDiv = document.createElement('div');
                 aiMessageDiv.className = 'flex justify-start message-fade-in';
@@ -417,7 +510,23 @@
                                 </svg>
                             </div>
                             <div class="bg-gray-50 rounded-2xl px-4 py-3">
+                                ${responseHeader}
                                 <div class="text-gray-800 whitespace-pre-wrap">${aiResponse.replace(/\n/g, '<br>')}</div>
+                                ${data.sources ? `
+                                    <div class="mt-3 pt-3 border-t border-gray-200">
+                                        <div class="text-xs text-gray-600 font-medium mb-2">Sources:</div>
+                                        <div class="space-y-1">
+                                            ${data.sources.map(source => `
+                                                <div class="text-xs text-blue-600 hover:text-blue-800">
+                                                    <a href="${source.url}" target="_blank" class="flex items-center space-x-1">
+                                                        <span>🔗</span>
+                                                        <span>${source.title}</span>
+                                                    </a>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
                             </div>
                         </div>
                     </div>

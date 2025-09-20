@@ -79,6 +79,8 @@
             chat.scrollTop = chat.scrollHeight;
 
             try {
+                console.log('Sending request:', { message, mode: modeSelect.value });
+                
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -88,26 +90,54 @@
                     })
                 });
 
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
+                console.log('Response data:', data);
                 
                 // Remove loading message
                 chat.removeChild(chat.lastElementChild);
+                
+                // Handle different response formats
+                let aiResponse = '';
+                
+                if (data.response) {
+                    aiResponse = data.response;
+                } else if (data.text) {
+                    aiResponse = data.text;
+                } else if (data.content) {
+                    aiResponse = data.content;
+                } else {
+                    console.log('Unexpected response format:', data);
+                    aiResponse = 'Got a response but in an unexpected format. Check console for details.';
+                }
                 
                 // Add AI response
                 chat.innerHTML += `
                     <div class="flex justify-start">
                         <div class="bg-gray-100 px-4 py-2 rounded-lg max-w-2xl">
-                            ${data.response.replace(/\n/g, '<br>')}
+                            ${aiResponse.replace(/\n/g, '<br>')}
                         </div>
                     </div>
                 `;
                 
             } catch (error) {
-                chat.removeChild(chat.lastElementChild);
+                console.error('Error details:', error);
+                
+                // Remove loading message
+                if (chat.lastElementChild) {
+                    chat.removeChild(chat.lastElementChild);
+                }
+                
                 chat.innerHTML += `
                     <div class="flex justify-start">
-                        <div class="bg-red-100 px-4 py-2 rounded-lg text-red-800">
-                            Error: ${error.message}
+                        <div class="bg-red-100 px-4 py-2 rounded-lg text-red-800 max-w-2xl">
+                            <strong>Error:</strong> ${error.message}<br>
+                            <small>Check browser console (F12) for details</small>
                         </div>
                     </div>
                 `;

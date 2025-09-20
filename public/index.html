@@ -74,6 +74,20 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
+
+        /* Custom optgroup styling */
+        optgroup {
+            font-weight: bold;
+            color: #374151;
+            background-color: #f9fafb;
+        }
+        
+        optgroup option {
+            font-weight: normal;
+            color: #111827;
+            background-color: white;
+            padding-left: 20px;
+        }
     </style>
 </head>
 <body class="bg-white">
@@ -105,20 +119,57 @@
                     </button>
                     
                     <!-- Settings panel -->
-                    <div id="settingsPanel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 p-4 z-20">
+                    <div id="settingsPanel" class="hidden absolute right-0 mt-2 w-96 bg-white rounded-xl shadow-lg border border-gray-200 p-4 z-20">
                         <h3 class="font-semibold text-gray-900 mb-4">Assistant Settings</h3>
                         
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">AI Model</label>
-                                <select id="model" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                    <option value="claude-3-sonnet" selected>Claude 3 Sonnet (Balanced)</option>
-                                    <option value="claude-3-haiku">Claude 3 Haiku (Fast & Efficient)</option>
-                                    <option value="claude-3-opus">Claude 3 Opus (Most Capable)</option>
-                                    <option value="llama2-70b">Llama 2 70B (Alternative)</option>
-                                    <option value="titan-text-large">Amazon Titan Large (AWS Native)</option>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">AI Model Selection</label>
+                                <select id="model" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm">
+                                    <!-- Balanced Performance -->
+                                    <optgroup label="🎯 Balanced Performance">
+                                        <option value="claude-3-5-sonnet" selected>Claude 3.5 Sonnet (Latest & Best)</option>
+                                        <option value="claude-3-sonnet">Claude 3 Sonnet (Reliable)</option>
+                                        <option value="gpt-4o">GPT-4o (OpenAI Latest)</option>
+                                    </optgroup>
+                                    
+                                    <!-- Speed & Efficiency -->
+                                    <optgroup label="⚡ Speed & Efficiency">
+                                        <option value="claude-3-haiku">Claude 3 Haiku (Fastest)</option>
+                                        <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Quick Responses)</option>
+                                        <option value="llama-3-8b">Llama 3 8B (Efficient)</option>
+                                    </optgroup>
+                                    
+                                    <!-- Maximum Capability -->
+                                    <optgroup label="🧠 Maximum Capability">
+                                        <option value="claude-3-opus">Claude 3 Opus (Most Capable)</option>
+                                        <option value="gpt-4-turbo">GPT-4 Turbo (Advanced)</option>
+                                        <option value="llama-3-70b">Llama 3 70B (Large Scale)</option>
+                                    </optgroup>
+                                    
+                                    <!-- Specialized Models -->
+                                    <optgroup label="🔬 Specialized Models">
+                                        <option value="claude-3-sonnet-math">Claude 3 Sonnet (Math Focus)</option>
+                                        <option value="gpt-4-code">GPT-4 (Code Specialist)</option>
+                                        <option value="mistral-large">Mistral Large (European)</option>
+                                    </optgroup>
+                                    
+                                    <!-- AWS Native -->
+                                    <optgroup label="☁️ AWS Native">
+                                        <option value="titan-text-large">Amazon Titan Text Large</option>
+                                        <option value="titan-text-express">Amazon Titan Text Express</option>
+                                        <option value="nova-pro">Amazon Nova Pro</option>
+                                        <option value="nova-lite">Amazon Nova Lite</option>
+                                    </optgroup>
+                                    
+                                    <!-- Open Source -->
+                                    <optgroup label="🔓 Open Source">
+                                        <option value="llama-2-70b">Llama 2 70B (Meta)</option>
+                                        <option value="mixtral-8x7b">Mixtral 8x7B (Mistral)</option>
+                                        <option value="command-r">Command R (Cohere)</option>
+                                    </optgroup>
                                 </select>
-                                <p class="text-xs text-gray-500 mt-1">Choose based on your needs: speed vs. capability vs. cost</p>
+                                <p class="text-xs text-gray-500 mt-1">Choose based on your needs: speed, capability, or cost</p>
                             </div>
 
                             <div>
@@ -228,7 +279,7 @@
                             </div>
                             <div class="bg-gray-50 rounded-2xl px-4 py-3 message-fade-in">
                                 <p class="text-gray-800">Hello! I'm your AI education assistant. I can help you learn and understand various topics. Feel free to ask me anything, and I'll adapt my teaching style based on your preferences.</p>
-                                <p class="text-gray-600 text-sm mt-2">💡 Try different learning modes and models in the settings to see how my responses change!</p>
+                                <p class="text-gray-600 text-sm mt-2">💡 Try different AI models and learning modes in the settings to see how my responses change!</p>
                             </div>
                         </div>
                     </div>
@@ -327,7 +378,7 @@
                             </div>
                             <div class="bg-gray-50 rounded-2xl px-4 py-3 message-fade-in">
                                 <p class="text-gray-800">Hello! I'm your AI education assistant. I can help you learn and understand various topics. Feel free to ask me anything, and I'll adapt my teaching style based on your preferences.</p>
-                                <p class="text-gray-600 text-sm mt-2">💡 Try different learning modes and models in the settings to see how my responses change!</p>
+                                <p class="text-gray-600 text-sm mt-2">💡 Try different AI models and learning modes in the settings to see how my responses change!</p>
                             </div>
                         </div>
                     </div>
@@ -485,7 +536,7 @@
                 if (data.modelUsed || data.searchResults) {
                     responseHeader = '<div class="text-xs text-gray-500 mb-2 flex items-center space-x-2">';
                     if (data.modelUsed) {
-                        responseHeader += `<span>📊 ${data.modelUsed}</span>`;
+                        responseHeader += `<span>🤖 ${data.modelUsed}</span>`;
                     }
                     if (data.searchResults) {
                         responseHeader += `<span>🔍 ${data.searchResults} web results</span>`;
@@ -521,7 +572,7 @@
                                                     <a href="${source.url}" target="_blank" class="flex items-center space-x-1">
                                                         <span>🔗</span>
                                                         <span>${source.title}</span>
-                                                    </a>
+                                                        </a>
                                                 </div>
                                             `).join('')}
                                         </div>
